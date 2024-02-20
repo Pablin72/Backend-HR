@@ -1,0 +1,6 @@
+
+[domains]
+frontend_domain = "http://localhost:4200"
+[views]
+admin_view = "http://localhost:4200/adminHome"
+user_view = "http://localhost:4200/"

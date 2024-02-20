@@ -1,0 +1,8 @@
+flask-cognito-lib
+boto3
+python-dotenv
+gunicorn
+pymongo
+flask
+flask-cors
+toml
