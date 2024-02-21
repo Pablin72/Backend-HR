@@ -27,11 +27,7 @@ app.register_blueprint(admin_blueprint)
 
 # Configura CORS para permitir solicitudes desde http://localhost:4200
 
-config = toml.load('./config.toml')
-FRONTEND_DOMAIN = config['domains']['frontend_domain']
-CORS(app, origins=[FRONTEND_DOMAIN], supports_credentials=True) 
-
-app.run(debug=True, host='0.0.0.0', threaded=True, port=5000)
 
 if __name__ == "__main__":
-    app.run(debug=True, port=5000)
+    app.run(debug=True, host='0.0.0.0', threaded=True, port=5000)
+
