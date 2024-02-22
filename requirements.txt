@@ -7,3 +7,4 @@ flask
 flask-cors
 toml
 Flask-Mail
+watchdog
