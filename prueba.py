@@ -4,8 +4,14 @@ import entities.room as room
 
 app = Flask(__name__)
 
-# Configuración de la base de datos
-app.config['MONGO_URI'] = 'mongodb://localhost:27017/hotel'
+from dotenv import load_dotenv
+load_dotenv
+import os
+mongo_uri = os.getenv('MONGO_URI')
+
+
+# Conectar a la base de datos MongoDB
+mongo_client = MongoClient(mongo_uri)
 mongo = MongoClient(app.config['MONGO_URI'])
 
 # Comprobación de la conexión

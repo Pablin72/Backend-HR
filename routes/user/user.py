@@ -5,7 +5,7 @@ from models.room import RoomManager, Room
 from models.booking import BookingManager  # Importa el BookingManager
 from dotenv import load_dotenv
 import os
-
+from flask_mail import Mail, Message
 load_dotenv()
 
 # Obtén la cadena de conexión desde la variable de entorno
@@ -93,3 +93,21 @@ def get_booking(booking_id):
         return jsonify(booking.to_dict()), 200
     else:
         return jsonify({"message": "Booking not found"}), 404
+
+
+@app.route('/send_mail', methods=['POST'])
+def send_mail():
+    mail = Mail(app)
+    data = request.json
+    subject = data.get('subject', 'Sin Asunto')
+    recipient = data.get('recipient', None)
+    message = data.get('message', '')
+
+    if not recipient:
+        return jsonify({'error': 'El destinatario es requerido'}), 400
+
+    msg = Message(subject, recipients=[recipient])
+    msg.body = message
+    mail.send(msg)
+
+    return jsonify({'message': 'Correo enviado exitosamente'}), 200

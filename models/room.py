@@ -1,6 +1,14 @@
 from datetime import datetime
 from itertools import combinations
 from pymongo import MongoClient
+from dotenv import load_dotenv
+load_dotenv
+import os
+mongo_uri = os.getenv('MONGO_URI')
+
+
+# Conectar a la base de datos MongoDB
+mongo_client = MongoClient(mongo_uri)
 
 def is_room_available(room, start_date, end_date):
     # Si no hay fechas de ocupación, la habitación está disponible
@@ -80,7 +88,7 @@ class RoomManager:
         return rooms
     
 if __name__ == "__main__":
-    mongo_client = MongoClient('mongodb://localhost:27017/')
+    mongo_client = MongoClient(mongo_uri)
     room_manager = RoomManager(mongo_client=mongo_client, db_name="hotel", collection_name="rooms")
 
     start_date_str = "2024-01-15"

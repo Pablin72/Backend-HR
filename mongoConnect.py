@@ -1,8 +1,13 @@
 from pymongo import MongoClient
 from entities.user import User
+from dotenv import load_dotenv
+load_dotenv
+import os
+mongo_uri = os.getenv('MONGO_URI')
+
 
 # Conectar a la base de datos MongoDB
-mongo_client = MongoClient('mongodb://localhost:27017/')
+mongo_client = MongoClient(mongo_uri)
 
 # Crear una instancia del User
 user = User(
