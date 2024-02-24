@@ -234,8 +234,11 @@ def update_booking(booking_id):
     if not json_data:
         return jsonify({"message": "No input data provided"}), 400
 
-    updated_data = json_data  # Aquí podrías validar y procesar los datos según tus necesidades
-    modified_count = booking_manager.update_booking(booking_id, updated_data)
+    # Crear un objeto Booking a partir de los datos JSON recibidos
+    updated_booking = Booking.from_dict(json_data)
+    
+    # Llamar al método update_booking de booking_manager con el objeto Booking actualizado
+    modified_count = booking_manager.update_booking(booking_id, updated_booking)
 
     if modified_count:
         return jsonify({"message": "Booking updated successfully"}), 200
