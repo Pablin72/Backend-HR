@@ -95,19 +95,19 @@ def get_booking(booking_id):
         return jsonify({"message": "Booking not found"}), 404
 
 
-@app.route('/send_mail', methods=['POST'])
-def send_mail():
-    mail = Mail(app)
-    data = request.json
-    subject = data.get('subject', 'Sin Asunto')
-    recipient = data.get('recipient', None)
-    message = data.get('message', '')
+# @app.route('/send_mail', methods=['POST'])
+# def send_mail():
+#     mail = Mail(app)
+#     data = request.json
+#     subject = data.get('subject', 'Sin Asunto')
+#     recipient = data.get('recipient', None)
+#     message = data.get('message', '')
 
-    if not recipient:
-        return jsonify({'error': 'El destinatario es requerido'}), 400
+#     if not recipient:
+#         return jsonify({'error': 'El destinatario es requerido'}), 400
 
-    msg = Message(subject, recipients=[recipient])
-    msg.body = message
-    mail.send(msg)
+#     msg = Message(subject, recipients=[recipient])
+#     msg.body = message
+#     mail.send(msg)
 
-    return jsonify({'message': 'Correo enviado exitosamente'}), 200
+#     return jsonify({'message': 'Correo enviado exitosamente'}), 200
