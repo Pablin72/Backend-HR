@@ -95,9 +95,8 @@ def get_booking(booking_id):
         return jsonify({"message": "Booking not found"}), 404
 
 
-# @app.route('/send_mail', methods=['POST'])
+# @user_blueprint.route('/send_mail', methods=['POST'])
 # def send_mail():
-#     mail = Mail(app)
 #     data = request.json
 #     subject = data.get('subject', 'Sin Asunto')
 #     recipient = data.get('recipient', None)
@@ -108,6 +107,14 @@ def get_booking(booking_id):
 
 #     msg = Message(subject, recipients=[recipient])
 #     msg.body = message
+#     from app import mail
+#     app.config['MAIL_SERVER'] = os.getenv('MAIL_SERVER')
+#     app.config['MAIL_PORT'] = int(os.getenv('MAIL_PORT'))
+#     app.config['MAIL_USE_TLS'] = os.getenv('MAIL_USE_TLS')
+#     app.config['MAIL_USE_SSL'] = os.getenv('MAIL_USE_SSL') 
+#     app.config['MAIL_USERNAME'] = os.getenv('MAIL_USERNAME')
+#     app.config['MAIL_PASSWORD'] = os.getenv('MAIL_PASSWORD')
+#     app.config['MAIL_DEFAULT_SENDER'] = os.getenv('MAIL_DEFAULT_SENDER')
 #     mail.send(msg)
 
 #     return jsonify({'message': 'Correo enviado exitosamente'}), 200
