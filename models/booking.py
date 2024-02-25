@@ -55,10 +55,15 @@ class BookingManager:
         result = self.collection.insert_one(booking_dict)
         return result.inserted_id
 
-    def update_booking(self, _id, updated_data):
+    def update_booking(self, _id, updated_booking):
+        updated_data = updated_booking.to_dict()
+        # Convertir _id a entero
+        _id = int(_id)
         result = self.collection.update_one({"_id": _id}, {"$set": updated_data})
         return result.modified_count
 
+
+
     def delete_booking(self, _id):
-        result = self.collection.delete_one({"_id": _id})
+        result = self.collection.delete_one({"_id": int(_id)})
         return result.deleted_count
