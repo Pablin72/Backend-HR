@@ -93,6 +93,23 @@ def get_booking(booking_id):
         return jsonify(booking.to_dict()), 200
     else:
         return jsonify({"message": "Booking not found"}), 404
+    
+
+# Método para crear una nueva reserva
+@user_blueprint.route('/user/bookings', methods=['POST'])
+#@auth_required(groups=["admin"])  # Requiere autenticación y que el usuario pertenezca al grupo "admin"
+def create_booking():
+    json_data = request.get_json()
+    if not json_data:
+        return jsonify({"message": "No input data provided"}), 400
+
+    new_booking = Booking.from_dict(json_data)
+    booking_id = booking_manager.write_booking(new_booking)
+
+    if booking_id:
+        return jsonify({"message": "Booking created successfully", "booking_id": str(booking_id)}), 201
+    else:
+        return jsonify({"message": "Failed to create booking"}), 500
 
 
 # @user_blueprint.route('/send_mail', methods=['POST'])
