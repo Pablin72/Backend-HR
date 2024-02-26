@@ -100,6 +100,8 @@ def get_booking(booking_id):
 #@auth_required(groups=["admin"])  # Requiere autenticación y que el usuario pertenezca al grupo "admin"
 def create_booking():
     json_data = request.get_json()
+
+
     if not json_data:
         return jsonify({"message": "No input data provided"}), 400
 
