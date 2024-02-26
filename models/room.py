@@ -19,8 +19,8 @@ def is_room_available(room, start_date, end_date):
     end_date = datetime.strptime(end_date, '%Y-%m-%d')
     
     for occupancy_period in room.occupancy:
-        occupied_start = datetime.strptime(occupancy_period['checkin'], '%Y-%m-%d')
-        occupied_end = datetime.strptime(occupancy_period['checkout'], '%Y-%m-%d')
+        occupied_start = datetime.strptime(occupancy_period[0], '%Y-%m-%d')
+        occupied_end = datetime.strptime(occupancy_period[1], '%Y-%m-%d')
         if start_date < occupied_end and end_date > occupied_start:
             return False
     return True
@@ -58,6 +58,10 @@ class RoomManager:
         self.db = mongo_client[db_name]
         self.collection = self.db[collection_name]
 
+    def get_room_by_id(self, room_id):
+        room_data = self.collection.find_one({"_id": int(room_id)})
+        return Room.from_dict(room_data) if room_data else None
+
     
 
     def find_room_combinations(self, num_people, start_date, end_date, num_rooms):
@@ -80,6 +84,23 @@ class RoomManager:
         valid_combinations.sort(key=lambda x: (x['excess_capacity'], len(x['rooms'])))
         
         return valid_combinations[:10] if len(valid_combinations) >= 10 else valid_combinations
+    
+    def update_room(self, room_id, occupancy_period):
+        # Obtener la habitación por su ID
+        room = self.get_room_by_id(room_id)
+        if not room:
+            return False  # Habitación no encontrada
+
+        # Agregar el periodo de ocupación al array 'occupancy'
+        room.occupancy.append([occupancy_period['checkin_date'], occupancy_period['checkout_date']])
+
+        # Actualizar la habitación en la base de datos
+        result = self.collection.update_one(
+            {"_id": int(room_id)},
+            {"$set": {"occupancy": room.occupancy}}
+        )
+
+        return result.modified_count > 0  # Devolver True si se modificó al menos un documento
 
 
     def get_rooms(self):

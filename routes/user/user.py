@@ -2,7 +2,7 @@ from flask import Blueprint, jsonify, make_response, redirect, request, send_fil
 from pymongo import MongoClient
 from models.users import UserManager, User  # Import the User and UserManager classes
 from models.room import RoomManager, Room
-from models.booking import BookingManager  # Importa el BookingManager
+from models.booking import BookingManager, Booking  # Importa el BookingManager
 from dotenv import load_dotenv
 import os
 from flask_mail import Mail, Message

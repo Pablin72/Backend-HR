@@ -1,8 +1,9 @@
 from datetime import datetime
+from uuid import uuid4  # Importar para generar un UUID único
 
 class Booking:
-    def __init__(self, _id, user_id, checkin_date, checkout_date, qty_guests, rooms, total_price):
-        self._id = _id
+    def __init__(self, user_id, checkin_date, checkout_date, qty_guests, rooms, total_price):
+        self._id = str(uuid4())  # Genera automáticamente un nuevo UUID
         self.user_id = user_id
         self.checkin_date = datetime.strptime(checkin_date, "%Y-%m-%d")
         self.checkout_date = datetime.strptime(checkout_date, "%Y-%m-%d")
@@ -13,7 +14,6 @@ class Booking:
     @classmethod
     def from_dict(cls, booking_dict):
         return cls(
-            booking_dict['_id'],
             booking_dict['user_id'],
             booking_dict['checkin_date'],
             booking_dict['checkout_date'],
@@ -24,7 +24,6 @@ class Booking:
 
     def to_dict(self):
         return {
-            "_id": self._id,
             "user_id": self.user_id,
             "checkin_date": self.checkin_date.strftime("%Y-%m-%d"),
             "checkout_date": self.checkout_date.strftime("%Y-%m-%d"),
@@ -32,6 +31,7 @@ class Booking:
             "rooms": self.rooms,
             "total_price": self.total_price
         }
+
 
 class BookingManager:
     def __init__(self, mongo_client, db_name, collection_name):

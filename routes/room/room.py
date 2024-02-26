@@ -55,3 +55,29 @@ def find_rooms():
         combinations_json.append(combo_info)
 
     return jsonify(combinations_json), 200
+
+@room_blueprint.route('/rooms/<room_id>', methods=['PUT'])
+def update_room_occupancy(room_id):
+    json_data = request.get_json()
+    if not json_data:
+        return jsonify({"message": "No input data provided"}), 400
+    
+    checkin_date = json_data.get('checkin_date')
+    checkout_date = json_data.get('checkout_date')
+
+    if not all([checkin_date, checkout_date]):
+        return jsonify({"message": "Missing required parameters (checkin_date, checkout_date)"}), 400
+
+    # Obtener la habitación por su ID
+    room = room_manager.get_room_by_id(room_id)
+    if not room:
+        return jsonify({"message": "Room not found"}), 404
+
+    # Agregar las fechas de check-in y check-out a la lista de ocupación de la habitación
+    occupancy_period = {"checkin_date": checkin_date, "checkout_date": checkout_date}
+    updated = room_manager.update_room(room_id, occupancy_period)
+
+    if updated:
+        return jsonify({"message": "Room occupancy updated successfully"}), 200
+    else:
+        return jsonify({"message": "Failed to update room occupancy"}), 500
