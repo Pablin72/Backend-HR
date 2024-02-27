@@ -1,6 +1,6 @@
 
 [domains]
-frontend_domain = "http://localhost:4200"
+frontend_domain = "https://hotel-front-end.vercel.app/"
 [views]
-admin_view = "http://localhost:4200/adminHome"
-user_view = "http://localhost:4200/"
+admin_view = "https://hotel-front-end.vercel.app/adminHome"
+user_view = "https://hotel-front-end.vercel.app/"
