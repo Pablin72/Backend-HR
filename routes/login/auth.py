@@ -84,5 +84,5 @@ def logout():
 
 @auth_blueprint.route("/postlogout")
 def postlogout():
-    return redirect(url_for("auth_blueprint.home"))
+    return redirect(USER_HOME_VIEW)
 
