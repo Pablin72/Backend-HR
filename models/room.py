@@ -52,6 +52,18 @@ class Room:
             room_dict['size'],
             room_dict.get('images', [])
         )
+    
+    def to_dict(self):
+        return {
+            "_id": self._id,
+            "description": self.description,
+            "occupancy": self.occupancy,
+            "people_capacity": self.people_capacity,
+            "price": self.price,
+            "qty_beds": self.qty_beds,
+            "room_type": self.room_type,
+            "size": self.size,
+        }
 
 class RoomManager:
     def __init__(self, mongo_client, db_name, collection_name):
