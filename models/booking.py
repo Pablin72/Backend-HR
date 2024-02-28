@@ -2,15 +2,15 @@ from datetime import datetime
 from uuid import uuid4  # Importar para generar un UUID único
 
 class Booking:
-    def __init__(self, _id, user_id, checkin_date, checkout_date, qty_guests, rooms, total_price):
-        # self._id = str(uuid4())  # Genera automáticamente un nuevo UUID
-        self._id = _id  # Genera automáticamente un nuevo UUID
+    def __init__(self, _id, user_id, checkin_date, checkout_date, qty_guests, rooms, total_price, capturedId):
+        self._id = _id  
         self.user_id = user_id
         self.checkin_date = datetime.strptime(checkin_date, "%Y-%m-%d")
         self.checkout_date = datetime.strptime(checkout_date, "%Y-%m-%d")
         self.qty_guests = qty_guests
         self.rooms = rooms
         self.total_price = total_price
+        self.capturedId = capturedId
 
     @classmethod
     def from_dict(cls, booking_dict):
@@ -21,7 +21,8 @@ class Booking:
             booking_dict['checkout_date'],
             booking_dict['qty_guests'],
             booking_dict['rooms'],
-            booking_dict['total_price']
+            booking_dict['total_price'],
+            booking_dict['capturedId']
         )
 
     def to_dict(self):
@@ -32,7 +33,8 @@ class Booking:
             "checkout_date": self.checkout_date.strftime("%Y-%m-%d"),
             "qty_guests": self.qty_guests,
             "rooms": self.rooms,
-            "total_price": self.total_price
+            "total_price": self.total_price,
+            "capturedId": self.capturedId
         }
 
 
