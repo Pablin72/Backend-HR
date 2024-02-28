@@ -1,6 +1,6 @@
 
 [domains]
-frontend_domain = "https://localhost:4200"
+frontend_domain = "http://localhost:4200"
 [views]
-admin_view = "https://localhost:4200/adminHome"
-user_view = "https://localhost:4200/"
+admin_view = "http://localhost:4200/adminHome"
+user_view = "http://localhost:4200/"

@@ -10,6 +10,7 @@ import toml
 from dotenv import load_dotenv
 from flask_mail import Mail, Message
 load_dotenv()
+
 config = toml.load('./config.toml')
 FRONTEND_DOMAIN = config['domains']['frontend_domain']
 import os
