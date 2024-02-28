@@ -34,7 +34,7 @@ class Booking:
             "qty_guests": self.qty_guests,
             "rooms": self.rooms,
             "total_price": self.total_price,
-            "capturedId": self.capturedId
+           # "capturedId": self.capturedId
         }
 
 

@@ -83,7 +83,7 @@ def update_room_occupancy(room_id):
         return jsonify({"message": "Failed to update room occupancy"}), 500
 
 
-# Método para obtener una reserva por su ID
+# Método para obtener un cuarto por su ID
 @room_blueprint.route('/room/<room_id>', methods=['GET'])
 #@auth_required(groups=["admin"])  # Requiere autenticación y que el usuario pertenezca al grupo "admin"
 def get_room_by_id(room_id):
