@@ -62,8 +62,6 @@ class BookingManager:
 
     def update_booking(self, _id, updated_booking):
         updated_data = updated_booking.to_dict()
-        # Convertir _id a entero
-        _id = _id
         result = self.collection.update_one({"_id": _id}, {"$set": updated_data})
         return result.modified_count
 

@@ -3,7 +3,7 @@ from flask_cognito_lib.decorators import auth_required
 from pymongo import MongoClient
 from os import environ
 from flask_cognito_lib.exceptions import AuthorisationRequiredError, CognitoGroupRequiredError
-
+from models.room import RoomManager
 from models.booking import BookingManager  # Importa el BookingManager
 from models.booking import Booking
 
@@ -36,7 +36,7 @@ if not mongo_uri:
 mongo_client = MongoClient(mongo_uri)
 
 booking_manager = BookingManager(mongo_client, 'hotel', 'bookings')  # Inicializa el BookingManager
-
+room_manager = RoomManager(mongo_client, 'hotel', 'rooms')  # Inicializa el RoomManager
 
 # Método para obtener todas las reservas
 @admin_blueprint.route('/admin/bookings', methods=['GET'])
@@ -77,6 +77,7 @@ def create_booking():
 #@auth_required(groups=["admin"])  # Requiere autenticación y que el usuario pertenezca al grupo "admin"
 def update_booking(booking_id):
     json_data = request.get_json()
+    room_manager.deleteOccupancy(json_data['checkin_date'], json_data['checkout_date'], json_data['lastStartDate'], json_data['lastEndDate'], json_data['rooms'])
     if not json_data:
         return jsonify({"message": "No input data provided"}), 400
 

@@ -10,7 +10,6 @@ import toml
 from dotenv import load_dotenv
 from flask_mail import Mail, Message
 load_dotenv()
-
 config = toml.load('./config.toml')
 FRONTEND_DOMAIN = config['domains']['frontend_domain']
 import os
@@ -21,9 +20,9 @@ app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 465
 app.config['MAIL_USE_TLS'] = False
 app.config['MAIL_USE_SSL'] = True
-app.config['MAIL_USERNAME'] = 'gtmstev@gmail.com'
-app.config['MAIL_PASSWORD'] = 'cybk likf fzvd iabm'
-app.config['MAIL_DEFAULT_SENDER'] = 'gtmstev@gmail.com'
+app.config['MAIL_USERNAME'] = 'hotelcopodenieve3@gmail.com'
+app.config['MAIL_PASSWORD'] = 'qteq endd ssms dqss'
+app.config['MAIL_DEFAULT_SENDER'] = 'hotelcopodenieve3@gmail.com'
 
 app.config.from_object(Config)
 # Configuración explícita para Flask-Mail
@@ -31,9 +30,9 @@ app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 465
 app.config['MAIL_USE_TLS'] = False
 app.config['MAIL_USE_SSL'] = True
-app.config['MAIL_USERNAME'] = 'gtmstev@gmail.com'
-app.config['MAIL_PASSWORD'] = 'cybk likf fzvd iabm'
-app.config['MAIL_DEFAULT_SENDER'] = 'gtmstev@gmail.com'
+app.config['MAIL_USERNAME'] = 'hotelcopodenieve3@gmail.com'
+app.config['MAIL_PASSWORD'] = 'qteq endd ssms dqss'
+app.config['MAIL_DEFAULT_SENDER'] = 'hotelcopodenieve3@gmail.com'
 auth.init_app(app) 
 # Configuración adicional para Flask-Mail
 load_dotenv()

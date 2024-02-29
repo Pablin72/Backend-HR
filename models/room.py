@@ -63,6 +63,7 @@ class Room:
             "qty_beds": self.qty_beds,
             "room_type": self.room_type,
             "size": self.size,
+            "images": self.images
         }
 
 class RoomManager:
@@ -119,6 +120,34 @@ class RoomManager:
         rooms_data = self.collection.find()
         rooms = [Room.from_dict(h) for h in rooms_data]
         return rooms
+    
+    def deleteOccupancy(self, checkin, checkout, new_checkin, new_checkout, ids):
+        print("Entro a deleteOccupancy")
+        for i in ids:
+            room = self.get_room_by_id(i)
+            if room:
+                for j in range(len(room.occupancy)):
+                    print("Cuarto: ", i)
+                    print("Checkin: ", room.occupancy[j][0])
+                    print("Checkout: ", room.occupancy[j][1])
+                    print("Checkin front: ", checkin)
+                    print("Checkout front: ", checkout)
+                    if room.occupancy[j][0] == checkin and room.occupancy[j][1] == checkout:
+                        print("Entro a if")
+                        room.occupancy[j] = [new_checkin, new_checkout] # Eliminar el período de ocupación
+                        print(room.occupancy[j])
+                        break
+                # Actualizar la habitación en la base de datos
+                result = self.collection.update_one(
+                    {"_id": int(i)},
+                    {"$set": {"occupancy": room.occupancy}}
+                )
+                if result.modified_count == 0:
+                    return False  # No se pudo actualizar la habitación
+            else:
+                return False  # Habitación no encontrada
+        return True  # Todas las ocupaciones eliminadas correctamente
+
     
 if __name__ == "__main__":
     mongo_client = MongoClient(mongo_uri)
