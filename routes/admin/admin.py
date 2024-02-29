@@ -6,6 +6,7 @@ from flask_cognito_lib.exceptions import AuthorisationRequiredError, CognitoGrou
 from models.room import RoomManager
 from models.booking import BookingManager  # Importa el BookingManager
 from models.booking import Booking
+from datetime import datetime
 
 from dotenv import load_dotenv
 import os
@@ -77,7 +78,22 @@ def create_booking():
 #@auth_required(groups=["admin"])  # Requiere autenticación y que el usuario pertenezca al grupo "admin"
 def update_booking(booking_id):
     json_data = request.get_json()
-    room_manager.deleteOccupancy(json_data['checkin_date'], json_data['checkout_date'], json_data['lastStartDate'], json_data['lastEndDate'], json_data['rooms'])
+    myLastStartDate = ''
+
+    try:
+        # Assuming the date string is in UTC format
+        my_lastEndDate = datetime.strptime(json_data['lastEndDate'], "%Y-%m-%dT%H:%M:%S.%fZ")
+        my_lastStartDate = datetime.strptime(json_data['lastStartDate'], "%Y-%m-%dT%H:%M:%S.%fZ")
+        # print("Converted date format: ", date_obj.strftime("%Y-%m-%d"))
+    except ValueError:
+        # If parsing fails, handle the error appropriately (e.g., print an error message or set a default value)
+        print("Error: Invalid date format.")
+        exit()
+
+    
+    print(json_data['lastStartDate'])
+    print(json_data['lastEndDate'])
+    room_manager.deleteOccupancy(json_data['checkin_date'], json_data['checkout_date'], my_lastStartDate.strftime("%Y-%m-%d"), my_lastEndDate.strftime("%Y-%m-%d"), json_data['rooms'])
     if not json_data:
         return jsonify({"message": "No input data provided"}), 400
 

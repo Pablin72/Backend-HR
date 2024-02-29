@@ -121,19 +121,13 @@ class RoomManager:
         rooms = [Room.from_dict(h) for h in rooms_data]
         return rooms
     
-    def deleteOccupancy(self, checkin, checkout, new_checkin, new_checkout, ids):
+    def deleteOccupancy(self, new_checkin, new_checkout, checkin, checkout, ids):
         print("Entro a deleteOccupancy")
         for i in ids:
             room = self.get_room_by_id(i)
             if room:
                 for j in range(len(room.occupancy)):
-                    print("Cuarto: ", i)
-                    print("Checkin: ", room.occupancy[j][0])
-                    print("Checkout: ", room.occupancy[j][1])
-                    print("Checkin front: ", checkin)
-                    print("Checkout front: ", checkout)
                     if room.occupancy[j][0] == checkin and room.occupancy[j][1] == checkout:
-                        print("Entro a if")
                         room.occupancy[j] = [new_checkin, new_checkout] # Eliminar el período de ocupación
                         print(room.occupancy[j])
                         break
