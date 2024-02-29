@@ -1,6 +1,6 @@
 
 [domains]
-frontend_domain = "https://hotel-front-g2oixt69b-alexansaas-projects.vercel.app"
+frontend_domain = "https://hotel-front-end.vercel.app"
 [views]
-admin_view = "https://hotel-front-g2oixt69b-alexansaas-projects.vercel.app/adminHome"
-user_view = "https://hotel-front-g2oixt69b-alexansaas-projects.vercel.app/"
+admin_view = "https://hotel-front-end.vercel.app/adminHome"
+user_view = "https://hotel-front-end.vercel.app/"
