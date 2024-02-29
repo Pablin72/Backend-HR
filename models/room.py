@@ -121,7 +121,27 @@ class RoomManager:
         rooms = [Room.from_dict(h) for h in rooms_data]
         return rooms
     
-    def deleteOccupancy(self, new_checkin, new_checkout, checkin, checkout, ids):
+    def deleteOccupancy(self, checkin, checkout, ids):
+        print("Entro a deleteOccupancy")
+        for i in ids:
+            room = self.get_room_by_id(i)
+            if room:
+                for j in range(len(room.occupancy)):
+                    if room.occupancy[j][0] == checkin and room.occupancy[j][1] == checkout:
+                        del room.occupancy[j] # Eliminar el período de ocupación
+                        break
+                # Actualizar la habitación en la base de datos
+                result = self.collection.update_one(
+                    {"_id": int(i)},
+                    {"$set": {"occupancy": room.occupancy}}
+                )
+                if result.modified_count == 0:
+                    return False  # No se pudo actualizar la habitación
+            else:
+                return False  # Habitación no encontrada
+        return True  # Todas las ocupaciones eliminadas correctamente
+
+    def editOccupancy(self, new_checkin, new_checkout, checkin, checkout, ids):
         print("Entro a deleteOccupancy")
         for i in ids:
             room = self.get_room_by_id(i)
@@ -141,6 +161,8 @@ class RoomManager:
             else:
                 return False  # Habitación no encontrada
         return True  # Todas las ocupaciones eliminadas correctamente
+
+        
 
     
 if __name__ == "__main__":

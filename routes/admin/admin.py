@@ -90,10 +90,7 @@ def update_booking(booking_id):
         print("Error: Invalid date format.")
         exit()
 
-    
-    print(json_data['lastStartDate'])
-    print(json_data['lastEndDate'])
-    room_manager.deleteOccupancy(json_data['checkin_date'], json_data['checkout_date'], my_lastStartDate.strftime("%Y-%m-%d"), my_lastEndDate.strftime("%Y-%m-%d"), json_data['rooms'])
+    room_manager.editOccupancy(json_data['checkin_date'], json_data['checkout_date'], my_lastStartDate.strftime("%Y-%m-%d"), my_lastEndDate.strftime("%Y-%m-%d"), json_data['rooms'])
     if not json_data:
         return jsonify({"message": "No input data provided"}), 400
 
@@ -109,10 +106,16 @@ def update_booking(booking_id):
         return jsonify({"message": "Failed to update booking"}), 500
 
 # Método para eliminar una reserva
-@admin_blueprint.route('/admin/bookings/<booking_id>', methods=['DELETE'])
+@admin_blueprint.route('/admin/bookings/<booking_id>', methods=['POST'])
 #@auth_required(groups=["admin"])  # Requiere autenticación y que el usuario pertenezca al grupo "admin"
 def delete_booking(booking_id):
     deleted_count = booking_manager.delete_booking(booking_id)
+
+    json_data = request.get_json()
+
+    room_manager.deleteOccupancy(json_data['checkin_date'], json_data['checkout_date'], json_data['rooms'])
+
+
     if deleted_count:
         return jsonify({"message": "Booking deleted successfully"}), 200
     else:
