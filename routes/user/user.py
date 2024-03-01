@@ -3,6 +3,7 @@ from pymongo import MongoClient
 from models.users import UserManager, User  # Import the User and UserManager classes
 from models.room import RoomManager, Room
 from models.booking import BookingManager, Booking  # Importa el BookingManager
+from models.refund import Refund, RefundManager  # Importa el RefundManager
 from dotenv import load_dotenv
 import os
 from flask_mail import Mail, Message
@@ -112,6 +113,24 @@ def create_booking():
         return jsonify({"message": "Booking created successfully", "booking_id": str(booking_id)}), 201
     else:
         return jsonify({"message": "Failed to create booking"}), 500
+    
+refund_manager = RefundManager(mongo_client, 'hotel', 'refunds')  # Reemplaza mongo_client y db_name con tus configuraciones reales
+
+
+@user_blueprint.route('/user/refunds', methods=['POST'])
+def create_refund():
+    json_data = request.get_json()
+
+    if not json_data:
+        return jsonify({"message": "No input data provided"}), 400
+
+    new_refund = Refund.from_dict(json_data)
+    refund_id = refund_manager.write_refund(new_refund)
+
+    if refund_id:
+        return jsonify({"message": "Refund created successfully", "refund_id": str(refund_id)}), 201
+    else:
+        return jsonify({"message": "Failed to create refund"}), 500
 
 
 # @user_blueprint.route('/send_mail', methods=['POST'])
